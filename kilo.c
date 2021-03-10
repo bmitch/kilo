@@ -193,6 +193,8 @@ void editorOpen(char *filename) {
 
 /*** input ***/
 void editorMoveCursor(int key) {
+    erow *row = (E.cy >= E.numrows) ? NULL : &E.row[E.cy];
+
     switch (key) {
         case ARROW_LEFT:
             if (E.cx != 0) {
@@ -200,7 +202,9 @@ void editorMoveCursor(int key) {
             }
             break;
         case ARROW_RIGHT:
-            E.cx++;
+            if (row && E.cx < row->size) {
+                E.cx++;
+            }
             break;
         case ARROW_UP:
             if (E.cy != 0) {
